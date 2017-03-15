@@ -1,4 +1,4 @@
-from time_frame import time_frame, time_frame_rough
+from variables import time_frame, time_frame_rough
 
 """" Basic program template ideas in pseudocode."""
 
@@ -20,21 +20,36 @@ from time_frame import time_frame, time_frame_rough
 
 Optional: signal buy/sell/hold alerts BLACK SWAN ALERTS """
 #1
-installment = input("Amount of money to invest per time_frame: ")
 
+install = input("Amount of money to invest per time_frame: ")
+installment = install / holding.allocation#see class
 frequency = time_frame(time_frame_rough)
-
+real_return =
 
 percent_increase = real_return / frequency
 target_value = current_value * percent_increase + installment
 
 #Maybe make class called holdings
 class Holding:
-    def __init__(self, name, family, allocation, current_value=0)
+    """ creating a class for the different funds"""
+    def __init__(self, name, family, allocation, current_value=0):
         self.name = name
         self.family = family
         self.allocation = allocation
         self.current_value = current_value
+
+    def __repr___(self):
+        pass
+
+    def __str__(self):
+        pass
+
+class StockFund(Holding):
+    pass
+
+class BondFund(Holding):
+    pass
+    
 
 #2
 def what_to_do(fund=str, current_holding=int, target_value=int):
