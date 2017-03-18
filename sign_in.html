@@ -1,0 +1,23 @@
+<!-- Inlude a greetings with description of app then register or sign in forms. -->
+<html>
+<head><h1>Welcome to the Value Averaging App!</h1></head>
+<body>
+
+  {% extends 'base.html' %}
+  {% block body %}
+
+  <h2>{{ the_title }}</h2>
+
+  <form method='POST' action='/submit'>
+    <table>
+      <p>Please sign in!</p>
+      <tr><td>Username:</td><td><input name='username' type='TEXT' width='50'></td></tr>
+      <tr><td>E-mail</td><td><input name='email' type='TEXT'></td></tr>
+    </table>
+    <p>When your ready to enter just click it!</p>
+    <p><input vaule='Cmon, do it' type='SUBMIT'></p>
+  </form>
+
+  {% endblock %}
+</body>
+</html>

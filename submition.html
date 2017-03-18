@@ -1,0 +1,22 @@
+<!-- Here's where more funds can be added or subtracted including submitting initial
+portfilio. Have links to other sites such as retirement calculators and the fed
+for inflation rates. -->
+<html>
+{% extends 'base.html' %}
+
+{% block body %}
+
+<h2>{{ the_title }}</h2>
+
+<p><h1>So did you have any funds to add today or are you just setting up?</h1></p>
+
+<form method='POST' action='/invest'>
+  <table>
+    <p>If you  know what funds you'd like to add enter them here:</p>
+    <tr><td>Fund:</td><td><input name='name' type='TEXT' width='20'></td></tr>
+    <tr><td>Type:</td><td><input name='family' type='TEXT'></td></tr>
+    <tr><td>Allocation:</td><td><input name='allocation' type='TEXT'></td></tr>
+    <tr><td>Shares:</td><td><input name='num_shares' type='TEXT'></td></tr>
+  </table>
+  <p>If everything looks good click away!!</p>
+  
