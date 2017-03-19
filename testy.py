@@ -117,12 +117,43 @@
 # print(VTSMX)
 # VWAHX
 
-from flask import Flask
+from flask import Flask, render_template, request
 
-test = Flask(__name__)
+# test = Flask(__name__)
+#
+# @test.route('/test')
+# def testing():
+#     print("Testing 1 2 3")
+#     return 'Testing'
+# test.run(debug=True)
+#
+val = Flask(__name__)
 
-@test.route('/test')
-def testing():
-    print("Testing 1 2 3")
-    return 'Testing'
-test.run(debug=True)
+@val.route('/val_in')
+def first_page():
+    return render_template('sign_in.html',
+                            the_title='Patient Investing to You!')
+#----->>> goes to /submit
+@val.route('/submit', methods=['POST'])
+def second_page():
+    return render_template('submission.html')
+
+@val.route('/invest', method=['POST'])
+""" this should post to database"""
+""" and show results page"""
+
+@val.route('/invest', methods=['POST'])
+def invest_this():
+    fund = request.form['name']
+    current_holding_value = request.form['previous_value']
+    target_value = current_holding_value * percent_increase + installment
+    #percent_increase and installment get request from initial setup page?
+    #other form request or seperate request function
+    to_invest = what_to_do(fund, current_holding_value, target_value)
+    log_request(requests, to_invest)
+    return render_template('results.html',
+                            the_fund = fund,
+                            the_prev_value = current_holding_value,
+                            to_do = to_invest)
+
+val.run(debug=True)

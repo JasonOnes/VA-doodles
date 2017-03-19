@@ -4,7 +4,7 @@
 body {
   font-family:      Verdana, Geneva, Arial, sans-serif;
   font-size:        medium;
-  background-color: tan;
+  background-color: #008000;
   margin-top:       5%;
   margin-bottom:    5%;
   margin-left:      10%;
@@ -59,7 +59,7 @@ border-collapse:    collapse;
 }
 
 td, th {
-border:             thin dotted gray;
+border:             thick dotted gray;
 }
 
 /*** Inputs ***/

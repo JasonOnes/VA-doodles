@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, escape, session
 
 from variables import time_frame, time_frame_rough
 from class_acts import Portfolio, Holding, StockFund, BondFund
+from contman import UseDatabase, ConnectionError, SQLError, CredentialsError
+
 #quick question, do you have to import parents and children classes
 
 
@@ -49,6 +51,7 @@ target_value = previous_value * percent_increase + installment
     possibly have num_of_shares as an attribut within class?"""
 #2
 def what_to_do(fund=str, current_holding_value=int, target_value=int):
+    """if sell option turned off disable sell elif"""
     if current_holding < target_value:
         print("Buy {} amount of {}.".format(current_holding_value - target_value, fund))
     elif current_holding > target_value:
@@ -60,10 +63,23 @@ what_to_do("VGPMX", 3155, 7222)
 
 
 """ Make templates for entry.html, dblog.html, invest.html, etc. """
+val = Flask(__name__)
+
 @val.route('/val_in')
 def first_page():
-    return render_template('entry.html',
-                            the_title='Welcome to the Value AVerage calculator!')
+    return render_template('sign_in.html',
+                            the_title='Patient Investing to You!')
+#----->>> goes to /submit
+""" need a page for intitial setup after sign in for more global variables
+including ultimate target value, time_till_target, inflation, return_percentage_needed
+"""
+@val.route('/submit', methods=['POST'])
+def second_page():
+    return render_template('submission.html')
+
+@val.route('/invest', method=['POST'])
+""" this should post to database"""
+""" and show results page"""
 
 @val.route('/invest', methods=['POST'])
 def invest_this():
@@ -78,5 +94,8 @@ def invest_this():
                             the_fund = fund,
                             the_prev_value = current_holding_value,
                             to_do = to_invest)
+
+val.run(debug=True)
+
 
 if __name__ = __main__:
