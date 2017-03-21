@@ -36,4 +36,11 @@ class UseDatabase:
         elif exc_type:
             raise exc_type(exc_value)
 
-            
+
+
+
+if __name__ == '__main__':
+    "run testing examples"
+    """will run anything after : if file run as main but not if it's imported
+    ie __name__ != '__mani__'
+    

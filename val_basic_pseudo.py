@@ -5,7 +5,7 @@ from class_acts import Portfolio, Holding, StockFund, BondFund
 from contman import UseDatabase, ConnectionError, SQLError, CredentialsError
 
 #quick question, do you have to import parents and children classes
-
+"""*******Be sure and look into possible problems using floats with monies***"""
 
 """" Basic program template ideas in pseudocode."""
 
@@ -116,5 +116,5 @@ def invest_this():
 
 val.run(debug=True)
 
-
-if __name__ = __main__:
+#
+# if __name__ = __main__:

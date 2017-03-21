@@ -7,12 +7,11 @@ class Portfolio(object):
         self.owner = owner
         # self.asset_allocation = asset_allocation
         self.num_of_holdings = num_of_holdings
-    def __str__():
-        return "{}'s' portfolio has {} holdings.".format(self.owner,
+    def __str__(self):
+        return "Portfilio-no-you-didn't {}'s portfolio currently contains {} holdings".format(self.owner, self.num_of_holdings)
+    def __repr__(self):
+        return "{} portfolio has {} holdings".format(self.owner,
                 self.num_of_holdings)
-    def __repr__():
-        return "Porfolio-no-you-didn't"
-
 
         # self.total = total_value
     def total_value():
@@ -88,3 +87,8 @@ class BondFund(Holding):
         self.family = 'Bond Fund'
 
     pass
+
+if __name__ == '__main__':
+    z = Portfolio("Jason", 3)
+
+    print(z)
