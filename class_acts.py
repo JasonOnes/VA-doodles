@@ -3,13 +3,35 @@
 
 class Portfolio(object):
     """ class for the total of all holdings for individual"""
-    def __init__(self, owner, asset_allocation, num_of_holdings, total_value):
-        self.owner = name
-        self.asset_allocation = asset_allocation
+    def __init__(self, owner, num_of_holdings):
+        self.owner = owner
+        # self.asset_allocation = asset_allocation
         self.num_of_holdings = num_of_holdings
-        self.total = total_value
+    def __str__():
+        return "{}'s' portfolio has {} holdings.".format(self.owner,
+                self.num_of_holdings)
+    def __repr__():
+        return "Porfolio-no-you-didn't"
+
+
+        # self.total = total_value
     def total_value():
         """total of all the holdings"""
+        if len(list(Holdings)) == self.num_of_holdings:
+           sum(list(Holdings.value))
+    def asset_allocation():
+        """ weight of each family such that total == 100 """
+        all_totes = sum(list(Holding.allocation))
+        if all_totes == 100:
+            return True
+        elif all_totes < 100:
+            print("You need allocate {}% more to one of your holdings. "
+                  .format(100-all_totes))
+        elif all_totes > 100:
+            print("You're askew, can't give more than a hundred percent.")
+        else:
+            print("?")
+
 
     def rebalance():
         """ compare values of holdings to asset allocation make adjustments"""
@@ -17,15 +39,16 @@ class Portfolio(object):
 
 class Holding(object):
     """ creating a class for the different funds"""
-    def __init__(self, name, family, allocation=0, num_shares=0):
+    def __init__(self, name, family, allocation=0, num_shares=0, value=0):
         self.name = name
         self.family = family
         self.allocation = allocation
         self.num_shares = num_shares
+        self.previous_value = value
 
 
     def __repr___(self):
-        pass
+        return "{} should be {}% of portfolio".format(self.name, self.allocation)
 
     def __str__(self):
         return "{} is a {} holding constituting {}% of porfolio".format(self.name,
@@ -48,7 +71,7 @@ class Holding(object):
         """
 
 class StockFund(Holding):
-    def __init__(self, name, stock_type, cap_size, allocation):
+    def __init__(self, name, stock_type, cap_size, stock_allocation):
         self.name = name
         self.stock_type = stock_type
         self.cap_size = cap_size
@@ -58,7 +81,7 @@ class StockFund(Holding):
     pass
 
 class BondFund(Holding):
-    def __init__(self, name, bond_type, term_length):
+    def __init__(self, name, bond_type, term_length, bond_allocation):
         self.name = name
         self.bond_type = bond_type
         self.term_length = term_length

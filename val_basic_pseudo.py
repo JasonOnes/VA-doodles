@@ -24,12 +24,31 @@ from contman import UseDatabase, ConnectionError, SQLError, CredentialsError
        instruct amt to sell/buy/hold.
 
     3.Send e-mail with at specified times with instructions
+    4. Provide link to appropriate brokerage with results
 
 
 
 Optional: signal buy/sell/hold alerts BLACK SWAN ALERTS
           Rebalance alert if allocations stray over/under threshold
            """
+
+Portfolio = {holding_1 : {'name' : 'VTSMX',
+                          'family': 'Stock',
+                          'allocation': 50,
+                          'value': 6000}
+            holding_2 : {'name' : 'VGSTX',
+                         'family' : 'Stock',
+                         'allocation' : 30,
+                         'value' : 4000}
+            holding_3 : {'name' : 'VWAHX',
+                         'family' : 'Bond',
+                         'allocation' : 20,
+                         'value' : 3000}
+            }
+#classes as keys???
+holding_1 = Holding('VTSMX', 'Stock', 0.50, 6000)
+previous_value = holding_1.value != holding_1[value]
+""" __hash__ , __eq__ to make this work?"""
 #1
 #form making
 
