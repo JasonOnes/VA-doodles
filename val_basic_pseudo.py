@@ -6,6 +6,8 @@ from contman import UseDatabase, ConnectionError, SQLError, CredentialsError
 
 #quick question, do you have to import parents and children classes
 """*******Be sure and look into possible problems using floats with monies***"""
+#round(N, 2) -- decimal type -- %.2f -- {0:.2f} -- money function formats
+
 
 """" Basic program template ideas in pseudocode."""
 
