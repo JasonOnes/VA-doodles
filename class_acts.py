@@ -60,6 +60,8 @@ class Portfolio(object):
                 print("all good")
                 pass
 
+
+
 class Holding(object):
     """ creating a class for the different funds"""
     def __init__(self, name, family, allocation=0, num_shares=0, value=0):
@@ -162,3 +164,4 @@ if __name__ == '__main__':
         print(hold)
         print(k)
         print(sum(k))
+    print(list(holding_2.__dict__.items()))
