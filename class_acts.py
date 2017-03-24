@@ -11,13 +11,18 @@
 
 class Portfolio(object):
     """ class for the total of all holdings for individual"""
-    def __init__(self, owner, num_of_holdings, stock_allocation=0.80, bond_allocation=0.20):
+    def __init__(self, owner, num_of_holdings, holdings=list(), taxable=True, stock_allocation=0.80, bond_allocation=0.20):
         self.owner = owner
         self.asset_allocation = stock_allocation + bond_allocation
         self.num_of_holdings = num_of_holdings
+        self.taxable = taxable
+        self.stock_allocation = stock_allocation
+        self.bond_allocation = bond_allocation
+        self.holdings = holdings
 
     def __str__(self):
-        return "Portfilio-no-you-didn't {}'s portfolio currently contains {} holdings".format(self.owner, self.num_of_holdings)
+        return "Portfilio-no-you-didn't {}'s portfolio currently contains {} holdings {}".format(self.owner,
+                self.num_of_holdings, self.holdings)
     def __repr__(self):
         return "{} portfolio has {} holdings".format(self.owner,
                 self.num_of_holdings)
@@ -27,6 +32,7 @@ class Portfolio(object):
         """total of all the holdings"""
         if len(list(Holdings)) == self.num_of_holdings:
            sum(list(Holdings.value))
+
     def asset_allocation():
 
         # something like this though out of scope
@@ -67,7 +73,7 @@ class Holding(object):
     def __init__(self, name, family, allocation=0, num_shares=0, value=0):
         self.name = name
         self.family = family
-        self.allocation = allocation
+        self.portfolio_allocation = allocation
         self.num_shares = num_shares
         self.previous_value = value
 
@@ -129,10 +135,17 @@ class BondFund(Holding):
     """ updates allocation of holding to portfolio """
 
 
-    pass
+"""" Shelve database storing holdings """
+# import shelve
+#
+# db = shelve.open('holdingsdb')
+# for obj in (holding_1, holding_2, holding_3):
+#     db[obj.name] = obj
+# db.close()
+#
 
 if __name__ == '__main__':
-    z = Portfolio("Jason", 3)
+
     holding_2 = BondFund('Municipal', 'Intermediate', 1.0)
     holding_2.name = 'VWAHX'
     holding_2.allocation = 0.20
@@ -142,20 +155,24 @@ if __name__ == '__main__':
     hold_2B = BondFund('Corporate', 'Long-Term', 0.3)
     hold_2B.name = 'VHAMBONE'
     hold_2B.allocation = 0.20
+    z = Portfolio("Jason", 3, [holding_1, holding_2, hold_2B])
     print(z)
     print(z.asset_allocation)
-    print(holding_2)
+    print(z.rebalance)
+
     print(holding_1)
-    # print(holding_2.total_allocation(holding_2.bond_allocation))
-    # print(holding_1.total_allocation(holding_1.stock_allocation))
-    print(holding_1.total_allocation())
-    holding_1.total_allocation()
-    print(holding_1)
-    print(holding_2.total_allocation())
-    print(hold_2B)
-    print(hold_2B.total_allocation())
-    hold_2B.total_allocation()
-    print(hold_2B)
+    # print(holding_2)
+    # print(holding_1)
+    # # print(holding_2.total_allocation(holding_2.bond_allocation))
+    # # print(holding_1.total_allocation(holding_1.stock_allocation))
+    # print(holding_1.total_allocation())
+    # holding_1.total_allocation()
+    # print(holding_1)
+    # print(holding_2.total_allocation())
+    # print(hold_2B)
+    # print(hold_2B.total_allocation())
+    # hold_2B.total_allocation()
+    # print(hold_2B)
     print("--all--")
     k = list()
     for hold in (holding_1, holding_2, hold_2B):
