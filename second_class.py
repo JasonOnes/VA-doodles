@@ -1,35 +1,41 @@
-""" Tackling the classes for ValAv from another angle, embedding to make composites"""
-
+""" Tackling the classes for ValAv from another angle, embedding to make
+composites"""
 
 
 class Portfolio(object):
     def __init__(self, *args):
         self.holdings = list(args)
+
     def AddHolding(self, fund):
         self.holdings.append(fund)
+
     def showPort(self):
         for fund in self.holdings:
             print(fund)
 
+
 class Holding(object):
     """ creating a class for the different funds"""
-    def __init__(self, name, family, portfolio_allocation=0, num_shares=0, value=0):
+    def __init__(self, name, family, portfolio_allocation=0, num_shares=0,
+                 value=0):
         self.name = name
         self.family = family
         self.portfolio_allocation = portfolio_allocation
         self.num_shares = num_shares
         self.previous_value = value
 
-
     def __repr___(self):
-        return "{} should be {}% of portfolio".format(self.name, self.allocation)
+        return "{} should be {}% of portfolio".format(self.name,
+                                                      self.allocation)
 
     def __str__(self):
-        return "{} is a {} holding constituting {}% of porfolio".format(self.name,
-                self.family, self.portfolio_allocation * 100)
+        return "{} is a {} holding constituting {}% of porfolio".format
+        (self.name, self.family, self.portfolio_allocation * 100)
+
 
 class StockFund:
-    def __init__(self, name, stock_type, cap_size, stock_allocation, portfolio_allocation=0.8):
+    def __init__(self, name, stock_type, cap_size,
+                 stock_allocation, portfolio_allocation=0.8):
         self.fund = Holding(name, 'Stock Fund', portfolio_allocation)
         self.stock_type = stock_type
         self.cap_size = cap_size
@@ -47,8 +53,10 @@ class StockFund:
     def __repr__(self):
         return str(self.fund)
 
+
 class BondFund:
-    def __init__(self, name, bond_type, term_length, bond_allocation, portfolio_allocation=0.2):
+    def __init__(self, name, bond_type, term_length, bond_allocation,
+                 portfolio_allocation=0.2):
         self.fund = Holding(name, 'Bond Fund')
         self.bond_type = bond_type
         self.term_length = term_length

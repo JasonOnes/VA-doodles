@@ -127,33 +127,92 @@ from flask import Flask, render_template, request
 #     return 'Testing'
 # test.run(debug=True)
 #
-val = Flask(__name__)
+# val = Flask(__name__)
+#
+# @val.route('/val_in')
+# def first_page():
+#     return render_template('sign_in.html',
+#                             the_title='Patient Investing to You!')
+# #----->>> goes to /submit
+# @val.route('/submit', methods=['POST'])
+# def second_page():
+#     return render_template('submission.html')
+#
+# @val.route('/invest', method=['POST'])
+# """ this should post to database"""
+# """ and show results page"""
+#
+# @val.route('/invest', methods=['POST'])
+# def invest_this():
+#     fund = request.form['name']
+#     current_holding_value = request.form['previous_value']
+#     target_value = current_holding_value * percent_increase + installment
+#     #percent_increase and installment get request from initial setup page?
+#     #other form request or seperate request function
+#     to_invest = what_to_do(fund, current_holding_value, target_value)
+#     log_request(requests, to_invest)
+#     return render_template('results.html',
+#                             the_fund = fund,
+#                             the_prev_value = current_holding_value,
+#                             to_do = to_invest)
+#
+# val.run(debug=True)
 
-@val.route('/val_in')
-def first_page():
-    return render_template('sign_in.html',
-                            the_title='Patient Investing to You!')
-#----->>> goes to /submit
-@val.route('/submit', methods=['POST'])
-def second_page():
-    return render_template('submission.html')
 
-@val.route('/invest', method=['POST'])
-""" this should post to database"""
-""" and show results page"""
 
-@val.route('/invest', methods=['POST'])
-def invest_this():
-    fund = request.form['name']
-    current_holding_value = request.form['previous_value']
-    target_value = current_holding_value * percent_increase + installment
-    #percent_increase and installment get request from initial setup page?
-    #other form request or seperate request function
-    to_invest = what_to_do(fund, current_holding_value, target_value)
-    log_request(requests, to_invest)
-    return render_template('results.html',
-                            the_fund = fund,
-                            the_prev_value = current_holding_value,
-                            to_do = to_invest)
 
-val.run(debug=True)
+class Holding(object):
+    """ creating a class for the different funds"""
+    def __init__(self, name, family, portfolio_allocation=0, num_shares=0, value=0):
+        self.name = name
+        self.family = family
+        self.portfolio_allocation = portfolio_allocation
+        self.num_shares = num_shares
+        self.previous_value = value
+
+    def __repr___(self):
+        return "{} should be {}% of portfolio".format(self.name,
+                                                      self.allocation)
+
+    def __str__(self):
+        return "{} is a {} holding constituting {}% of porfolio".format(
+        self.name, self.family, self.portfolio_allocation * 100)
+
+
+class StockFund(Holding):
+    def __init__(self, stock_type, cap_size, stock_allocation,
+                 portfolio_allocation=0.8):
+        # self.name = name inherits name from Holding
+        self.stock_type = stock_type
+        self.cap_size = cap_size
+        self.family = 'Stock Fund'
+        self.stock_allocation = stock_allocation
+        self.portfolio_allocation = portfolio_allocation
+
+
+    def total_allocation(self):
+        self.allocation = self.stock_allocation * self.portfolio_allocation
+        return self.allocation
+
+
+class BondFund(Holding):
+    def __init__(self, bond_type, term_length, bond_allocation,
+                 portfolio_allocation=0.2):
+        # self.name = name inherits name from holding
+        self.bond_type = bond_type
+        self.term_length = term_length
+        self.family = 'Bond Fund'
+        self.bond_allocation = bond_allocation
+        self.portfolio_allocation = portfolio_allocation
+
+    def total_allocation(self):
+        self.allocation = self.bond_allocation * self.portfolio_allocation
+        return self.allocation
+
+
+if __name__ == '__main__':
+
+    holding_1 = StockFund('Domestic', 'Total', 0.7)
+    holding_1.name = 'VTSMX'
+
+    print(holding_1)

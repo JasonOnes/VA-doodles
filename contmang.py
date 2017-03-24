@@ -6,11 +6,14 @@ import mysql.connector
 class ConnectionError(Exception):
     print("ConnectionError")
 
+
 class CredentialsError(Exception):
     print("This is above your paygrade!")
 
+
 class SQLError(Exception):
     print("The SQL is nuts, error!")
+
 
 class UseDatabase:
 
@@ -37,10 +40,7 @@ class UseDatabase:
             raise exc_type(exc_value)
 
 
-
-
 if __name__ == '__main__':
     "run testing examples"
     """will run anything after : if file run as main but not if it's imported
-    ie __name__ != '__mani__'
-    
+    ie __name__ != '__mani__' """

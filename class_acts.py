@@ -1,17 +1,33 @@
 """Classes module for Value valuations """
-"""++++Need to include some delimiters on allocations such that their sum is 1.0+++"""
+"""++++Need to include some delimiters on allocations such that their sum is
+    1.0+++"""
+
 # k = list()
 # for hold in (holding_1, holding_2, hold_2B):
 #     hold.total_allocation()
-#     k.append(hold.total_allocation())
 #     if sum(k) != 1.0:
 #         print("Need more/less holdings or readjust allocations")
 #     print(k)
 #     print(sum(k))
 
+
+class Owner(object):
+    """defines the Holder of Portfolio here is where we can initialize all the
+    target info, mahbe?"""
+    def __init__(self, username, email, schedule, amt_to_invest_per,
+                 real_return_needed):
+        self.username = username
+        self.email = email
+        self.schedule = schedule
+        self.installment = amt_to_invest_per
+        self.real_return_needed = real_return_needed
+        """ retrieve from forms ?"""
+
+
 class Portfolio(object):
     """ class for the total of all holdings for individual"""
-    def __init__(self, owner, num_of_holdings, holdings=list(), taxable=True, stock_allocation=0.80, bond_allocation=0.20):
+    def __init__(self, owner, num_of_holdings, holdings=list(), taxable=True,
+                 stock_allocation=0.80, bond_allocation=0.20):
         self.owner = owner
         self.asset_allocation = stock_allocation + bond_allocation
         self.num_of_holdings = num_of_holdings
@@ -21,17 +37,19 @@ class Portfolio(object):
         self.holdings = holdings
 
     def __str__(self):
-        return "Portfilio-no-you-didn't {}'s portfolio currently contains {} holdings {}".format(self.owner,
-                self.num_of_holdings, self.holdings)
+        return """Portfilio-no-you-didn't {}'s portfolio currently contains {}
+                  holdings {}""".format(self.owner,
+                                        self.num_of_holdings, self.holdings)
+
     def __repr__(self):
         return "{} portfolio has {} holdings".format(self.owner,
-                self.num_of_holdings)
+                                                     self.num_of_holdings)
 
         # self.total = total_value
     def total_value():
         """total of all the holdings"""
         if len(list(Holdings)) == self.num_of_holdings:
-           sum(list(Holdings.value))
+            sum(list(Holdings.value))
 
     def asset_allocation():
 
@@ -54,36 +72,36 @@ class Portfolio(object):
         else:
             print("?")
 
-
-    def rebalance():
-        """ compare values of holdings to asset allocation make adjustments"""
-        for holding in portfolio:
-            if holding_name.value // portfolio.total_value() < holding_name.total_allocation:
-                return buy()
-            elif holding_name.value // porfolio.total_value() > holding_name.total_allocation:
-                return sell()
-            else:
-                print("all good")
-                pass
-
+    # def rebalance():
+    #     """ compare values of holdings to asset allocation make adjustments""
+    #     for holding in portfolio:
+    #         if holding_name.value // portfolio.total_value
+    #         < holding_name.total_allocation:
+    #             return buy()
+    #         elif holding_name.value // porfolio.total_value
+    #         > holding_name.total_allocation:
+    #             return sell()
+    #         else:
+    #             print("all good")
+    #             pass
 
 
 class Holding(object):
     """ creating a class for the different funds"""
-    def __init__(self, name, family, allocation=0, num_shares=0, value=0):
+    def __init__(self, name, family, total_allocation=0, num_shares=0, value=0):
         self.name = name
         self.family = family
-        self.portfolio_allocation = allocation
+        self.total_allocation = total_allocation
         self.num_shares = num_shares
         self.previous_value = value
 
-
     def __repr___(self):
-        return "{} should be {}% of portfolio".format(self.name, self.allocation)
+        return "{} should be {}% of portfolio".format(self.name,
+                                                      self.portfolio_allocation)
 
     def __str__(self):
-        return "{} is a {} holding constituting {}% of porfolio".format(self.name,
-                self.family, self.allocation * 100)
+        return "{} is a {} holding constituting {}% of portfolio".format(
+            self.name, self.family, self.total_allocation() * 100)
 
     # def __add__(self, other_holdings):
     #     return self.current_value + other_holdings.value
@@ -101,9 +119,11 @@ class Holding(object):
 
         """
 
+
 class StockFund(Holding):
-    def __init__(self, stock_type, cap_size, stock_allocation, portfolio_allocation=0.8):
-        #self.name = name inherits name from Holding
+    def __init__(self, stock_type, cap_size, stock_allocation,
+                 portfolio_allocation=0.8):
+        # self.name = name inherits name from Holding
         self.stock_type = stock_type
         self.cap_size = cap_size
         self.family = 'Stock Fund'
@@ -112,15 +132,18 @@ class StockFund(Holding):
     # def total_allocation(self, stock_allocation):
     #     total_allocation = self.allocation * self.stock_allocation
     #     return total_allocation
+
     def total_allocation(self):
         self.allocation = self.stock_allocation * self.portfolio_allocation
         return self.allocation
 
     pass
 
+
 class BondFund(Holding):
-    def __init__(self, bond_type, term_length, bond_allocation, portfolio_allocation=0.2):
-        #self.name = name inherits name from holding
+    def __init__(self, bond_type, term_length, bond_allocation,
+                 portfolio_allocation=0.2):
+        # self.name = name inherits name from holding
         self.bond_type = bond_type
         self.term_length = term_length
         self.family = 'Bond Fund'
@@ -129,6 +152,7 @@ class BondFund(Holding):
     # def total_allocation(self, bond_allocation):
     #     total_allocation = self.allocation * self.bond_allocation
     #     return total_allocation
+
     def total_allocation(self):
         self.allocation = self.bond_allocation * self.portfolio_allocation
         return self.allocation
@@ -158,7 +182,7 @@ if __name__ == '__main__':
     z = Portfolio("Jason", 3, [holding_1, holding_2, hold_2B])
     print(z)
     print(z.asset_allocation)
-    print(z.rebalance)
+    # print(z.rebalance())
 
     print(holding_1)
     # print(holding_2)
