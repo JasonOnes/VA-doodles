@@ -82,12 +82,12 @@ class Portfolio(object):
 
 class Holding(object):
     """ creating a class for the different funds"""
-    def __init__(self, name, family, total_allocation=0, num_shares=0, value=0):
+    def __init__(self, name, family, num_shares=0, value=0):
         self.name = name
         self.family = family
-        self.total_allocation = total_allocation
+        # self.total_allocation = total_allocation
         self.num_shares = num_shares
-        self.previous_value = value
+        self.value = value
 
     def __repr___(self):
         return "{} should be {}% of portfolio".format(self.name,
@@ -100,15 +100,15 @@ class Holding(object):
     def target_value(self, current_value):
         """ Give the target_value of holding for this particular installment
         must be performed BEFORE current_value is updated."""
-        self.target_value = current_value * freq_return + installment
+        self.target_value = value * freq_return + installment
         return self.target_value
 
     def update_value(self, num_shares):
         """price = get value from web"""
         price = 5
         current_value = self.num_shares * price
-        self.current_value = current_value
-        return current_value
+        self.value = current_value
+        return self.value
 
     def update_num_shares(self, num_shares):
         """ update the num_shares after purchase or sale"""
@@ -117,12 +117,26 @@ class Holding(object):
         elif buy:
             num_shares = num_shares + amt_to_buy // current_price
 
+    def to_do(self):
+        if self.value > self.target_value:
+            amt_to_sell = self.value - self.target_value
+            return sell(amt_to_sell)
+        elif self.value < self.target_value:
+            amt_to_buy = self.target_value - self.value
+            return buy(amt_to_buy)
+        elif self.value == self.target_value:
+            return to_cash(installment)
+        else:
+            return "Something went wrong."
+            
+
 
 
 class StockFund(Holding):
     def __init__(self, stock_type, cap_size, stock_allocation,
                  portfolio_allocation=0.8):
         # self.name = name inherits name from Holding
+        #super().__init__(name, 'Stock Fund', num_shares, value)
         self.stock_type = stock_type
         self.cap_size = cap_size
         self.family = 'Stock Fund'
@@ -146,15 +160,20 @@ class BondFund(Holding):
         self.family = 'Bond Fund'
         self.bond_allocation = bond_allocation
         self.portfolio_allocation = portfolio_allocation
-    # def total_allocation(self, bond_allocation):
-    #     total_allocation = self.allocation * self.bond_allocation
-    #     return total_allocation
 
     def total_allocation(self):
         self.allocation = self.bond_allocation * self.portfolio_allocation
         return self.allocation
     """ updates allocation of holding to portfolio """
 
+
+class Commodity(Holding):
+    def __init__(self, name, family, num_shares, value, allocation=0):
+        super().__init__(name, family, num_shares, value)
+        self.allocation = allocation
+
+    def total_allocation(self):
+        return self.allocation
 
 """" Shelve database storing holdings """
 # import shelve
@@ -166,7 +185,7 @@ class BondFund(Holding):
 #
 
 if __name__ == '__main__':
-
+    holding_X = Commodity('VGPMX', 'Commodity', 10, 300, 0.15)
     holding_2 = BondFund('Municipal', 'Intermediate', 1.0)
     holding_2.name = 'VWAHX'
     holding_2.allocation = 0.20
@@ -184,6 +203,7 @@ if __name__ == '__main__':
     hold_2B.num_shares = 8
     print(hold_2B.update_value(hold_2B.num_shares))
     print(holding_1)
+    print(holding_X)
 
     # print("--all--")
     # k = list()
