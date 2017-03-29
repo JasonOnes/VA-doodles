@@ -2,14 +2,6 @@
 """++++Need to include some delimiters on allocations such that their sum is
     1.0+++"""
 
-# k = list()
-# for hold in (holding_1, holding_2, hold_2B):
-#     hold.total_allocation()
-#     if sum(k) != 1.0:
-#         print("Need more/less holdings or readjust allocations")
-#     print(k)
-#     print(sum(k))
-
 
 class Owner(object):
     """defines the Holder of Portfolio here is where we can initialize all the
@@ -30,7 +22,7 @@ class Portfolio(object):
                  stock_allocation=0.80, bond_allocation=0.20):
         self.owner = owner
         self.asset_allocation = stock_allocation + bond_allocation
-        self.num_of_holdings = num_of_holdings
+        self.num_of_holdings = len(holdings)
         self.taxable = taxable
         self.stock_allocation = stock_allocation
         self.bond_allocation = bond_allocation
@@ -60,6 +52,8 @@ class Portfolio(object):
         #     k.append(hold.total_allocation())
         #     print(k)
         #     print(sum(k))
+        # sum(k) = all_totes
+
         """ weight of each family such that total == 100 """
         all_totes = sum(list(Holding.allocation))
         if all_totes == 100:
@@ -103,21 +97,26 @@ class Holding(object):
         return "{} is a {} holding constituting {}% of portfolio".format(
             self.name, self.family, self.total_allocation() * 100)
 
-    # def __add__(self, other_holdings):
-    #     return self.current_value + other_holdings.value
-    #
-    # def __radd__(self, total):
-    #     return self.current_value + total
+    def target_value(self, current_value):
+        """ Give the target_value of holding for this particular installment
+        must be performed BEFORE current_value is updated."""
+        self.target_value = current_value * freq_return + installment
+        return self.target_value
 
-        """
-            def current_value(self):
-                c_v = get value from web
-                return self.num_shares * c_v
+    def update_value(self, num_shares):
+        """price = get value from web"""
+        price = 5
+        current_value = self.num_shares * price
+        self.current_value = current_value
+        return current_value
 
-            def target_value(self):
-                return previous_value * percent_increase + installment
+    def update_num_shares(self, num_shares):
+        """ update the num_shares after purchase or sale"""
+        if sale:
+            num_shares = num_shares - amt_to_sell // current_price
+        elif buy:
+            num_shares = num_shares + amt_to_buy // current_price
 
-        """
 
 
 class StockFund(Holding):
@@ -136,8 +135,6 @@ class StockFund(Holding):
     def total_allocation(self):
         self.allocation = self.stock_allocation * self.portfolio_allocation
         return self.allocation
-
-    pass
 
 
 class BondFund(Holding):
@@ -179,30 +176,21 @@ if __name__ == '__main__':
     hold_2B = BondFund('Corporate', 'Long-Term', 0.3)
     hold_2B.name = 'VHAMBONE'
     hold_2B.allocation = 0.20
-    z = Portfolio("Jason", 3, [holding_1, holding_2, hold_2B])
+    z = Portfolio("Jason", 3, [holding_1.name, holding_2.name, hold_2B.name])
     print(z)
     print(z.asset_allocation)
     # print(z.rebalance())
-
+    print(hold_2B.allocation)
+    hold_2B.num_shares = 8
+    print(hold_2B.update_value(hold_2B.num_shares))
     print(holding_1)
-    # print(holding_2)
-    # print(holding_1)
-    # # print(holding_2.total_allocation(holding_2.bond_allocation))
-    # # print(holding_1.total_allocation(holding_1.stock_allocation))
-    # print(holding_1.total_allocation())
-    # holding_1.total_allocation()
-    # print(holding_1)
-    # print(holding_2.total_allocation())
-    # print(hold_2B)
-    # print(hold_2B.total_allocation())
-    # hold_2B.total_allocation()
-    # print(hold_2B)
-    print("--all--")
-    k = list()
-    for hold in (holding_1, holding_2, hold_2B):
-        hold.total_allocation()
-        k.append(hold.total_allocation())
-        print(hold)
-        print(k)
-        print(sum(k))
-    print(list(holding_2.__dict__.items()))
+
+    # print("--all--")
+    # k = list()
+    # for hold in (holding_1, holding_2, hold_2B):
+    #     hold.total_allocation()
+    #     k.append(hold.total_allocation())
+    #     print(hold)
+    #     print(k)
+    #     print(sum(k))
+    # print(list(holding_2.__dict__.items()))

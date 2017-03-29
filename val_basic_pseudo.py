@@ -6,6 +6,9 @@ from contman import UseDatabase, ConnectionError, SQLError, CredentialsError
 
 # quick question, do you have to import parents and children classes
 """*****Be sure and look into possible problems using floats with monies***"""
+from decimal import decimal
+value = Decimal(current_value)
+from money import Money
 # round(N, 2) -- decimal type -- %.2f -- {0:.2f} -- money function formats
 
 
