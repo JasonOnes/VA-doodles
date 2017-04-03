@@ -279,9 +279,39 @@ def greet():
         print("Alright, hope your excited to be back {}!".format(user_name))
         """continue through to page two"""
 
+import requests, sys, json
+# import json
+h = input("What fund?: ")
+# url = 'http://finance.yahoo.com/quote/{}?ltr=1'.format(h)
+url = 'http://www.morningstar.com/funds/XNAS/{}/quote.html'.format(h)
+r = requests.get(url)
+print("Status code:", r.status_code)
+data_dict = r.json()
+print(data_dict.keys())
 
-if __name__ == '__main__':
-    greet()
+# struct = {}
+# try:
+#   try: #try parsing to dict
+#     dataform = str(r).strip("'<>() ").replace('\'', '\"')
+#     struct = json.loads(dataform)
+#   except:
+#     print(repr(r))
+#     print(sys.exc_info())
+
+# respons_dict = r.json()
+# print(respons_dict.keys())
+
+# print(r.json())
+
+# import sys, json
+
+
+
+#respons_dict = r.json()
+
+
+#if __name__ == '__main__':
+    #greet()
     # holding_1 = StockFund('Domestic', 'Total', 0.7)
     # holding_1.name = 'VTSMX'
     # holding_2 = StockFund('Foreign', 'Total', 0.3)
