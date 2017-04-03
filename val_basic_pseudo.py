@@ -130,4 +130,29 @@ def invest_this():
 
 val.run(debug=True)
 
+""" Possible page 1 user_name check using json? """
+
+import json
+
+
+def greet():
+    """ Greet user at login and determine if they are already a user"""
+    user_name = input("What is your name? ")
+    filename = '{}.json'.format(user_name)
+    try:
+        with open(filename) as file_object:
+            user_name = json.load(file_object)
+    except FileNotFoundError:
+        print("I don't think you've been here before.")
+        user_name = input("And what, pray tell, is your name again? ")
+        with open(filename, 'w') as file_object:
+            json.dump(user_name, file_object)
+        print("Okay, we'll remember you next time!")
+        """insert some security set up ie password"""
+        """ continue to page two"""
+    else:
+        print("Alright, hope your excited to be back {}!".format(user_name))
+        """ Insert security vetting """
+        """continue through to page two"""
+
 # if __name__ = __main__:

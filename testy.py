@@ -258,15 +258,36 @@ class Portfolio(object):
         else:
             print("?")
 
+import json
+
+
+def greet():
+    """ Greet user at login and determine if they are already a user"""
+    user_name = input("What is your name? ")
+    filename = '{}.json'.format(user_name)
+    try:
+        with open(filename) as file_object:
+            user_name = json.load(file_object)
+    except FileNotFoundError:
+        print("I don't think you've been here before.")
+        user_name = input("And what, pray tell, is your name again? ")
+        with open(filename, 'w') as file_object:
+            json.dump(user_name, file_object)
+        print("Okay, we'll remember you next time!")
+        """continue through to page2"""
+    else:
+        print("Alright, hope your excited to be back {}!".format(user_name))
+        """continue through to page two"""
+
 
 if __name__ == '__main__':
-
-    holding_1 = StockFund('Domestic', 'Total', 0.7)
-    holding_1.name = 'VTSMX'
-    holding_2 = StockFund('Foreign', 'Total', 0.3)
-    holding_2.name = 'VGSTX'
-    x = Portfolio('Jason', 33, ['VTSMX', 'VGSTX'])
-    print(holding_1)
-    print(holding_1.total_allocation())
-    print(x)
-    print(x.asset_allocation())
+    greet()
+    # holding_1 = StockFund('Domestic', 'Total', 0.7)
+    # holding_1.name = 'VTSMX'
+    # holding_2 = StockFund('Foreign', 'Total', 0.3)
+    # holding_2.name = 'VGSTX'
+    # x = Portfolio('Jason', 33, ['VTSMX', 'VGSTX'])
+    # print(holding_1)
+    # print(holding_1.total_allocation())
+    # print(x)
+    # print(x.asset_allocation())
