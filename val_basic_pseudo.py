@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, escape, session
 from variables import time_frame, time_frame_rough
 from class_acts import Portfolio, Holding, StockFund, BondFund
 from contman import UseDatabase, ConnectionError, SQLError, CredentialsError
-
+from json_greet import *
 # quick question, do you have to import parents and children classes
 """*****Be sure and look into possible problems using floats with monies***"""
 from decimal import decimal
@@ -93,7 +93,7 @@ what_to_do("VGPMX", 3155, 7222)
 """ Make templates for entry.html, dblog.html, invest.html, etc. """
 val = Flask(__name__)
 
-
+"""json greet page here?"""
 @val.route('/val_in')
 def first_page():
     return render_template('sign_in.html',
@@ -130,29 +130,7 @@ def invest_this():
 
 val.run(debug=True)
 
-""" Possible page 1 user_name check using json? """
-
-import json
 
 
-def greet():
-    """ Greet user at login and determine if they are already a user"""
-    user_name = input("What is your name? ")
-    filename = '{}.json'.format(user_name)
-    try:
-        with open(filename) as file_object:
-            user_name = json.load(file_object)
-    except FileNotFoundError:
-        print("I don't think you've been here before.")
-        user_name = input("And what, pray tell, is your name again? ")
-        with open(filename, 'w') as file_object:
-            json.dump(user_name, file_object)
-        print("Okay, we'll remember you next time!")
-        """insert some security set up ie password"""
-        """ continue to page two"""
-    else:
-        print("Alright, hope your excited to be back {}!".format(user_name))
-        """ Insert security vetting """
-        """continue through to page two"""
 
 # if __name__ = __main__:

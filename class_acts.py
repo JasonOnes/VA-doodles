@@ -117,6 +117,15 @@ class Holding(object):
         elif buy:
             num_shares = num_shares + amt_to_buy // current_price
 
+    def sell():
+        pass
+
+    def buy():
+        pass
+
+    def to_cash():
+        pass
+        
     def to_do(self):
         if self.value > self.target_value:
             amt_to_sell = self.value - self.target_value
@@ -128,7 +137,7 @@ class Holding(object):
             return to_cash(installment)
         else:
             return "Something went wrong."
-            
+
 
 
 
