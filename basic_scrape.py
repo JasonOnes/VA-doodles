@@ -9,8 +9,8 @@ def getQuote(url):
         print("uhoh HTTPError")
         return None
     try:
-        bsObject = BeautifulSoup(html.read(), "lxml")
-        quote = bsObject.body.div
+        bsObject = BeautifulSoup(html, "lxml")
+        quote = bsObject.findAll(id="quote-header-info")
     except AttributeError as e:
         print("uh AttributeError")
         return None
