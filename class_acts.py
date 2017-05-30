@@ -1,7 +1,7 @@
 """Classes module for Value valuations """
 """++++Need to include some delimiters on allocations such that their sum is
     1.0+++"""
-
+from abc import ABCMeta, abstractmethod
 
 class Owner(object):
     """defines the Holder of Portfolio here is where we can initialize all the
@@ -15,14 +15,18 @@ class Owner(object):
         self.real_return_needed = real_return_needed
         """ retrieve from forms ?"""
 
+"""Need Portfolio and Holding classes to work together perhaps inherit from an
+ABC"""
 
 class Portfolio(object):
     """ class for the total of all holdings for individual"""
-    def __init__(self, owner, num_of_holdings, holdings=list(), taxable=True,
+    def __init__(self, owner, num_of_holding, holdings=list(), taxable=True,
                  stock_allocation=0.80, bond_allocation=0.20):
         self.owner = owner
         self.asset_allocation = stock_allocation + bond_allocation
         self.num_of_holdings = len(holdings)
+        #maybe Holding.numHoldings()
+        #self.num_of_holdings = num_of_holdings
         self.taxable = taxable
         self.stock_allocation = stock_allocation
         self.bond_allocation = bond_allocation
@@ -30,18 +34,20 @@ class Portfolio(object):
 
     def __str__(self):
         return """Portfilio-no-you-didn't {}'s portfolio currently contains {}
-                  holdings {}""".format(self.owner,
-                                        self.num_of_holdings, self.holdings)
+                  holdings {}""".format(self.owner, self.num_of_holdings,
+                                        self.holdings)
+
+        #return "{} portfolio. {}".format(self.owner, Holding.print_number_of_holdings())
 
     def __repr__(self):
         return "{} portfolio has {} holdings".format(self.owner,
                                                      self.num_of_holdings)
 
         # self.total = total_value
-    def total_value():
+    def total_value(self):
         """total of all the holdings"""
-        if len(list(Holdings)) == self.num_of_holdings:
-            sum(list(Holdings.value))
+        if len(list(Holding)) == self.num_of_holdings:
+            return sum(list(Holdings.value))
 
     def asset_allocation():
 
@@ -82,12 +88,21 @@ class Portfolio(object):
 
 class Holding(object):
     """ creating a class for the different funds"""
+    __metaclass__ = ABCMeta #since holding is an abstraction 
+
+    @abstractmethod
+    def holding_type(self):
+        """Throw the type of holding "down" to the child classes?"""
+        pass
+
+    numHoldings = 0
     def __init__(self, name, family, num_shares=0, value=0):
         self.name = name
         self.family = family
         # self.total_allocation = total_allocation
         self.num_shares = num_shares
         self.value = value
+        #Holding.numHoldings += 1
 
     def __repr___(self):
         return "{} should be {}% of portfolio".format(self.name,
@@ -96,6 +111,9 @@ class Holding(object):
     def __str__(self):
         return "{} is a {} holding constituting {}% of portfolio".format(
             self.name, self.family, self.total_allocation() * 100)
+
+    def print_number_of_holdings():
+        print("There are currently {} holdings.".format(Holding.numHoldings))
 
     def target_value(self, current_value):
         """ Give the target_value of holding for this particular installment
@@ -125,7 +143,7 @@ class Holding(object):
 
     def to_cash():
         pass
-        
+
     def to_do(self):
         if self.value > self.target_value:
             amt_to_sell = self.value - self.target_value
@@ -145,15 +163,13 @@ class StockFund(Holding):
     def __init__(self, stock_type, cap_size, stock_allocation,
                  portfolio_allocation=0.8):
         # self.name = name inherits name from Holding
-        #super().__init__(name, 'Stock Fund', num_shares, value)
+        #Holding.__init__(name, 'Stock Fund', num_shares, value)
         self.stock_type = stock_type
         self.cap_size = cap_size
         self.family = 'Stock Fund'
         self.stock_allocation = stock_allocation
         self.portfolio_allocation = portfolio_allocation
-    # def total_allocation(self, stock_allocation):
-    #     total_allocation = self.allocation * self.stock_allocation
-    #     return total_allocation
+        Holding.numHoldings += 1
 
     def total_allocation(self):
         self.allocation = self.stock_allocation * self.portfolio_allocation
@@ -169,6 +185,7 @@ class BondFund(Holding):
         self.family = 'Bond Fund'
         self.bond_allocation = bond_allocation
         self.portfolio_allocation = portfolio_allocation
+        Holding.numHoldings += 1
 
     def total_allocation(self):
         self.allocation = self.bond_allocation * self.portfolio_allocation
@@ -180,6 +197,7 @@ class Commodity(Holding):
     def __init__(self, name, family, num_shares, value, allocation=0):
         super().__init__(name, family, num_shares, value)
         self.allocation = allocation
+        Holding.numHoldings += 1
 
     def total_allocation(self):
         return self.allocation
@@ -213,6 +231,13 @@ if __name__ == '__main__':
     print(hold_2B.update_value(hold_2B.num_shares))
     print(holding_1)
     print(holding_X)
+    Holding.print_number_of_holdings()
+    new_fund = StockFund('Domestic', 'Small-Cap', 0.15)
+    new_fund.name = 'XXXX'
+    print(new_fund)
+    Holding.print_number_of_holdings()
+    print(z.total_value())
+
 
     # print("--all--")
     # k = list()
