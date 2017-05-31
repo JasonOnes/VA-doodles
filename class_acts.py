@@ -2,6 +2,7 @@
 """++++Need to include some delimiters on allocations such that their sum is
     1.0+++"""
 from abc import ABCMeta, abstractmethod
+from get_quotes import getQuote
 
 class Owner(object):
     """defines the Holder of Portfolio here is where we can initialize all the
@@ -88,7 +89,7 @@ class Portfolio(object):
 
 class Holding(object):
     """ creating a class for the different funds"""
-    __metaclass__ = ABCMeta #since holding is an abstraction 
+    __metaclass__ = ABCMeta #since holding is an abstraction
 
     @abstractmethod
     def holding_type(self):
@@ -123,7 +124,7 @@ class Holding(object):
 
     def update_value(self, num_shares):
         """price = get value from web"""
-        price = 5
+        price = getQuote(self.name)
         current_value = self.num_shares * price
         self.value = current_value
         return self.value
@@ -160,13 +161,16 @@ class Holding(object):
 
 
 class StockFund(Holding):
-    def __init__(self, stock_type, cap_size, stock_allocation,
+    def __init__(self, name, stock_type, cap_size, stock_allocation,
                  portfolio_allocation=0.8):
-        # self.name = name inherits name from Holding
+        #super().__init__(name, 'Stock Fund', num_shares, value)
+        self.name = name #inherits name from Holding
         #Holding.__init__(name, 'Stock Fund', num_shares, value)
         self.stock_type = stock_type
         self.cap_size = cap_size
         self.family = 'Stock Fund'
+        #self.num_shares = num_shares
+        #self.value = value
         self.stock_allocation = stock_allocation
         self.portfolio_allocation = portfolio_allocation
         Holding.numHoldings += 1
@@ -177,9 +181,9 @@ class StockFund(Holding):
 
 
 class BondFund(Holding):
-    def __init__(self, bond_type, term_length, bond_allocation,
+    def __init__(self, name, bond_type, term_length, bond_allocation,
                  portfolio_allocation=0.2):
-        # self.name = name inherits name from holding
+        self.name = name
         self.bond_type = bond_type
         self.term_length = term_length
         self.family = 'Bond Fund'
@@ -213,14 +217,14 @@ class Commodity(Holding):
 
 if __name__ == '__main__':
     holding_X = Commodity('VGPMX', 'Commodity', 10, 300, 0.15)
-    holding_2 = BondFund('Municipal', 'Intermediate', 1.0)
-    holding_2.name = 'VWAHX'
+    holding_2 = BondFund('VWAHX', 'Municipal', 'Intermediate', 1.0)
+    #holding_2.name = 'VWAHX'
     holding_2.allocation = 0.20
-    holding_1 = StockFund('Domestic', 'Total', 0.30)
-    holding_1.name = 'VTSMX'
+    holding_1 = StockFund('VTSMX', 'Domestic', 'Total', 100, 0.30)
+    #holding_1.name = 'VTSMX'
     holding_1.allocation = 0.50
-    hold_2B = BondFund('Corporate', 'Long-Term', 0.3)
-    hold_2B.name = 'VHAMBONE'
+    hold_2B = BondFund('VHAMBONE', 'Corporate', 'Long-Term', 0.3)
+    #hold_2B.name = 'VHAMBONE'
     hold_2B.allocation = 0.20
     z = Portfolio("Jason", 3, [holding_1.name, holding_2.name, hold_2B.name])
     print(z)
@@ -232,19 +236,10 @@ if __name__ == '__main__':
     print(holding_1)
     print(holding_X)
     Holding.print_number_of_holdings()
-    new_fund = StockFund('Domestic', 'Small-Cap', 0.15)
-    new_fund.name = 'XXXX'
+    new_fund = StockFund('XXXX', 'Domestic', 'Small-Cap', 0.15)
+    #new_fund.name = 'XXXX'
     print(new_fund)
     Holding.print_number_of_holdings()
-    print(z.total_value())
-
-
-    # print("--all--")
-    # k = list()
-    # for hold in (holding_1, holding_2, hold_2B):
-    #     hold.total_allocation()
-    #     k.append(hold.total_allocation())
-    #     print(hold)
-    #     print(k)
-    #     print(sum(k))
-    # print(list(holding_2.__dict__.items()))
+    #print(z.total_value())
+    print(holding_X.value)
+    print(holding_1.update_value(200))
