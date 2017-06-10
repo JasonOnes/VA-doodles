@@ -1,6 +1,6 @@
 from googlefinance import getQuotes
 import json
-import time
+# import time
 
 #fund_name = Holding.name
 def quote_to_float(fund_name):
@@ -13,7 +13,7 @@ def getQuote(fund_name):
     data = json.loads(info)
     data_dict = {k: v for d in data for k, v in d.items()}
     return(data_dict['LastTradePrice'])
-    
+
     # tries = 0
     # while tries < 3:
     #     try:
@@ -37,10 +37,11 @@ def getQuote(fund_name):
         #     tries += 1
             #getQuote(fund_name)
 
-   
+
 if __name__ == '__main__':
     print(getQuote('VTSMX'))
     print(getQuote('VGTSX'))
+    print(getQuote("VWAHX"))
     print(getQuote("VGPMX"))
     #print(json.dumps(getQuotes('VTSMX'), indent=2))
-    print((quote_to_float('VTSMX')))
+    #print((quote_to_float('VTSMX')))

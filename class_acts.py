@@ -232,7 +232,7 @@ if __name__ == '__main__':
     # print(z.rebalance())
     print(hold_2B.allocation)
     hold_2B.num_shares = 8
-    print(hold_2B.update_value(hold_2B.num_shares))
+    #print(hold_2B.update_value(hold_2B.num_shares))
     print(holding_1)
     print(holding_X)
     Holding.print_number_of_holdings()
