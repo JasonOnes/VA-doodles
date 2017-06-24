@@ -2,6 +2,7 @@
 """++++Need to include some delimiters on allocations such that their sum is
     1.0+++"""
 from abc import ABCMeta, abstractmethod
+#from get_quotes import getQuote
 from get_quotes import getQuote
 
 class Owner(object):
@@ -124,7 +125,7 @@ class Holding(object):
 
     def update_value(self, num_shares):
         """price = get value from web"""
-        price = getQuote(self.name)
+        price = getQuotes(self.name)
         current_value = self.num_shares * price
         self.value = current_value
         return self.value
@@ -242,4 +243,4 @@ if __name__ == '__main__':
     Holding.print_number_of_holdings()
     #print(z.total_value())
     print(holding_X.value)
-    print(holding_1.update_value(200))
+    print(holding_1.update_value(200) + "hey now")
