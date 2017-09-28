@@ -1,6 +1,5 @@
 # ValAvg
 
-A simple web app to aid me in calculating buy/sell/hold amounts of various
+Notes/code snippets for a simple web app to aid me in calculating buy/sell/hold amounts of various
 holdings come investment time.
-A variation/combination of Michael Edelson's Value Averaging and Dollar Cost Averaging.
-I'm hoping to make it general enough to scope out to wider public.
+
